@@ -1,5 +1,5 @@
 module dFlipflop(
-	input load,clk
+	input load,clk,
 	input in,
 	output reg out
 );
@@ -23,4 +23,27 @@ module register(
 	dFlipflop df5(.clk(clk), .load(operation), .in(data[5]), .out(out[5]));
 	dFlipflop df6(.clk(clk), .load(operation), .in(data[6]), .out(out[6]));
 	dFlipflop df7(.clk(clk), .load(operation), .in(data[7]), .out(out[7]));
+endmodule
+
+module memory #(
+    parameter AD_LINES = 16,
+    parameter DATA_LINES = 8
+)(
+    input rd_wr_bar,
+    input [AD_LINES-1:0] addr,
+    input [DATA_LINES-1:0] wd,
+    output reg [DATA_LINES-1:0] rd,
+    input clk,
+    input cs
+);
+
+    reg [DATA_LINES-1:0] mem [0:(1<<AD_LINES)-1];
+
+    always @(posedge clk) begin
+        if (cs && rd_wr_bar)
+            rd <= mem[addr];
+        else if (cs && !rd_wr_bar)
+            mem[addr] <= wd;
+    end
+
 endmodule
