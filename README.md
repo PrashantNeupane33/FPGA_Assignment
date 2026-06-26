@@ -1,6 +1,9 @@
-# Project Title
+# 8-bit ALU
 ---
 8-bit ALU implementation on verilog for FPGA elective's assignment-1. This implementation ALU supports arithmetic,logical and shift operation and has three flags {Zero, Carry, Parity} to denote the state of obtained results.
+
+**Name**: Prashant Neupane
+**Roll No**: 079BEI025
 
 ## Features
 - Support arithmetic operations: Addition, Subtraction, Increment and Decrement
@@ -30,6 +33,27 @@ ALU takes two operand: operand1 and operand2 as input to operate on. If the inst
 
 Flags are updated after each ALU operation. All arithmetic operation change all three flags but other operation wont change any flag at all. 
 
-## Tests
+For uniary operations like increment, decrement, ALU will operate only on operand1.
 
+## Result 
+| Time (ns) | Opcode | Operation | Operand1 | Operand2 | Result | Flag (Z,C,P) |
+|-----------|:------:|-----------|---------:|---------:|-------:|:------------:|
+| 6000   | `0000` | Reset | 0   | 0   | 0   | `000` |
+| 16000  | `0000` | NOP | 10  | 20  | 0   | `000` |
+| 26000  | `0001` | ADD | 15  | 10  | 25  | `000` |
+| 36000  | `0001` | ADD | 200 | 100 | 44  | `010` |
+| 46000  | `0010` | SUB | 12  | 8   | 4   | `000` |
+| 56000  | `0010` | SUB | 10  | 20  | 246 | `011` |
+| 66000  | `0011` | INC | 5   | 1   | 6   | `001` |
+| 76000  | `0100` | DEC | 5   | 1   | 4   | `010` |
+| 86000  | `0101` | Complement | 0   | 0   | 255 | `010` |
+| 96000  | `0110` | Left Shift | 5   | 2   | 20  | `010` |
+| 106000 | `0111` | Right Shift | 160 | 3   | 20  | `010` |
+| 116000 | `1001` | Set Flag | 5   | 0   | 20* | `101` |
+| 126000 | `1000` | Get Flag | 0   | 0   | 5   | `101` |
+| 136000 | `1010` | AND | 240 | 60  | 48  | `101` |
+| 146000 | `1011` | OR | 240 | 15  | 255 | `101` |
+| 156000 | `1100` | XOR | 170 | 15  | 165 | `101` |
+
+![Alt text](result.png)
 
